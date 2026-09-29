@@ -8,6 +8,7 @@ import { getBoardEntity } from '@/lib/boards';
 import { BoardCloneButton } from '../BoardCloneButton';
 import { BoardEntityBadge } from '../BoardEntityBadge';
 import { useBoardEntityBadgeProps } from '../useBoardEntityBadgeProps';
+import { useBoardEntityHref } from '../useBoardEntityHref';
 
 export function BoardViewHeader({
   showActions = true,
@@ -21,11 +22,12 @@ export function BoardViewHeader({
   const { t, labels } = useMessages();
   const { entityType, entityId } = getBoardEntity(board);
   const entityBadge = useBoardEntityBadgeProps(entityType, entityId, showEntityBadge);
+  const entityHref = useBoardEntityHref(entityType, entityId);
 
   return (
     <PageHeader title={board?.name} description={board?.description}>
       <Row alignItems="center" gap>
-        {showEntityBadge && entityBadge && <BoardEntityBadge {...entityBadge} />}
+        {showEntityBadge && entityBadge && <BoardEntityBadge {...entityBadge} href={entityHref} />}
         {showActions && board?.id && (
             <>
               <LinkButton href={renderUrl(`/boards/${board.id}/design`, false)}>
